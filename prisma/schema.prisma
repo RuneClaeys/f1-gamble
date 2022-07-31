@@ -18,8 +18,14 @@ model User {
   email         String              @unique
   hash          String
 
-  firstName     String?
-  lastName      String?
-
   @@map("users")
+}
+
+model Driver{
+  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName     String
+  lastName      String
+  raceNumber   Int
+
+  @@map("driver")
 }
