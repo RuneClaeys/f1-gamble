@@ -22,10 +22,14 @@ model User {
 }
 
 model Driver{
-  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  firstName     String
-  lastName      String
-  raceNumber   Int
+  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  permanentNumber   String
+  code              String        @unique
+  url               String?
+  givenName         String
+  familyName        String
+  dateOfBirth       String?
+  nationality       String?
 
   @@map("driver")
 }
