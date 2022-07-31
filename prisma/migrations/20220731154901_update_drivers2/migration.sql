@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "driver" ALTER COLUMN "dateOfBirth" DROP NOT NULL,
-ALTER COLUMN "nationality" DROP NOT NULL,
-ALTER COLUMN "url" DROP NOT NULL;

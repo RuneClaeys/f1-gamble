@@ -31,5 +31,14 @@ model Driver{
   dateOfBirth       String?
   nationality       String?
 
-  @@map("driver")
+  @@map("drivers")
+}
+
+model Season{
+  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  year              Int           @unique
+  seasonStartDate   DateTime
+  seasonEndDate     DateTime
+
+  @@map("seasons")
 }

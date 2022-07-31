@@ -27,10 +27,13 @@ export class DriversService {
   }
 
   async updateDriver(id: string, driver: any) {
-    return this.prismaService.driver.update({
-      where: { id },
-      data: driver,
-    });
+    try {
+      return await this.prismaService.driver.update({ where: { id }, data: driver });
+    } catch (err) {
+      if (err?.code === 'P2025') {
+        throw new NotFoundException(`Driver with Id: ${id} does not exist`);
+      }
+    }
   }
 
   async deleteDriver(id: string) {
