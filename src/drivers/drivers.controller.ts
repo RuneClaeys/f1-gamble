@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { DriversService } from './drivers.service';
 import { DriverDto } from './dto/driver.dto';
 
@@ -19,5 +19,15 @@ export class DriversController {
   @Post()
   createDriver(@Body() driver: DriverDto) {
     return this.driversService.createDriver(driver);
+  }
+
+  @Put(':id')
+  updateDriver(@Param('id') id: string, @Body() driver: DriverDto) {
+    return this.driversService.updateDriver(id, driver);
+  }
+
+  @Delete(':id')
+  deleteDriver(@Param('id') id: string) {
+    return this.driversService.deleteDriver(id);
   }
 }

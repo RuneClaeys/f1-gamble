@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { DriverDto } from './dto/driver.dto';
 
@@ -11,9 +11,13 @@ export class DriversService {
   }
 
   async getDriver(id: string) {
-    return this.prismaService.driver.findUnique({
+    const driver = await this.prismaService.driver.findFirst({
       where: { id },
     });
+
+    if (!driver) throw new NotFoundException(`Driver with id: ${id} does not exist`);
+
+    return driver;
   }
 
   async createDriver(driverDto: DriverDto) {
