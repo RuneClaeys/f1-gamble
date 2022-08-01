@@ -39,6 +39,7 @@ model Team{
   url               String?
   name              String        @unique
   nationality       String?
+  shortName         String?       
 
   @@map("teams")
 }

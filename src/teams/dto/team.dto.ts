@@ -12,4 +12,8 @@ export class TeamDto {
   @IsString()
   @IsOptional()
   nationality?: string;
+
+  @IsString()
+  @IsOptional()
+  shortName?: string;
 }

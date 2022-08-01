@@ -4,6 +4,7 @@ CREATE TABLE "teams" (
     "url" TEXT,
     "name" TEXT NOT NULL,
     "nationality" TEXT,
+    "shortName" TEXT,
 
     CONSTRAINT "teams_pkey" PRIMARY KEY ("id")
 );
