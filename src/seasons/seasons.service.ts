@@ -12,23 +12,6 @@ export class SeasonsService {
     }
   }
 
-  private seasonMapper(season: any) {
-    return {
-      id: season.id,
-      name: season.name,
-      year: season.year,
-      teams: season.seasonDriver.map((sd) => {
-        return {
-          id: sd.team.id,
-          name: sd.team.name,
-          drivers: sd.team.seasonDriver.map((sd2) => {
-            return sd2.driver;
-          }),
-        };
-      }),
-    };
-  }
-
   async getSeasons() {
     return this.prismaService.season.findMany();
   }
@@ -36,27 +19,11 @@ export class SeasonsService {
   async getSeason(id: string) {
     const season = await this.prismaService.season.findFirst({
       where: { id },
-      include: {
-        _count: true,
-        seasonDriver: {
-          include: {
-            team: {
-              include: {
-                seasonDriver: {
-                  include: {
-                    driver: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
     });
 
     if (!season) throw new NotFoundException(`Season with Id: ${id} does not exist`);
 
-    return this.seasonMapper(season);
+    return season;
   }
 
   async createSeason(season: SeasonDto) {
