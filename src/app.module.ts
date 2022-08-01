@@ -6,9 +6,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 import { SeasonsModule } from './seasons/seasons.module';
 import { UsersModule } from './users/users.module';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({ isGlobal: true }), UsersModule, DriversModule, SeasonsModule],
+  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({ isGlobal: true }), UsersModule, DriversModule, SeasonsModule, TeamsModule],
   controllers: [],
   providers: [PrismaService],
 })

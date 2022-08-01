@@ -1,9 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
-const prisma = new PrismaClient();
-
-const driverSeeder = async () => {
+const driverSeeder = async (prisma: PrismaClient) => {
   const drivers = await fetch('http://ergast.com/api/f1/2022/drivers.json')
     .then((response) => response.json())
     .then((data: any) =>
@@ -13,7 +11,7 @@ const driverSeeder = async () => {
       }),
     );
 
-  await prisma.driver.createMany({ data: drivers });
+  await Promise.all(drivers.map((driver) => prisma.driver.upsert({ where: { code: driver.code }, create: driver, update: driver })));
 };
 
-driverSeeder().finally(async () => await prisma.$disconnect());
+export { driverSeeder };

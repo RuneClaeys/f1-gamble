@@ -6,6 +6,12 @@ import { SeasonDto } from './dto/season.dto';
 export class SeasonsService {
   constructor(private prismaService: PrismaService) {}
 
+  private handleNotFound(err: any, id: string) {
+    if (err?.code === 'P2025') {
+      throw new NotFoundException(`Season with Id: ${id} does not exist`);
+    }
+  }
+
   async getSeasons() {
     return this.prismaService.season.findMany();
   }
@@ -19,20 +25,22 @@ export class SeasonsService {
   }
 
   async createSeason(season: SeasonDto) {
-    return this.prismaService.season.create({ data: season });
+    return await this.prismaService.season.create({ data: season });
   }
 
   async updateSeason(id: string, seasonDto: SeasonDto) {
     try {
       return await this.prismaService.season.update({ where: { id }, data: seasonDto });
     } catch (err) {
-      if (err?.code === 'P2025') {
-        throw new NotFoundException(`Season with Id: ${id} does not exist`);
-      }
+      this.handleNotFound(err, id);
     }
   }
 
   async deleteSeason(id: string) {
-    return this.prismaService.season.delete({ where: { id } });
+    try {
+      return await this.prismaService.season.delete({ where: { id } });
+    } catch (err) {
+      this.handleNotFound(err, id);
+    }
   }
 }

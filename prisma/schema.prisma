@@ -34,6 +34,15 @@ model Driver{
   @@map("drivers")
 }
 
+model Team{
+  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  url               String?
+  name              String        @unique
+  nationality       String?
+
+  @@map("teams")
+}
+
 model Season{
   id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   year              Int           @unique

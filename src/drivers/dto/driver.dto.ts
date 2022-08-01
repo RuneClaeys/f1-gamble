@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class DriverDto {
   @IsString()
@@ -10,7 +10,8 @@ export class DriverDto {
   code: string;
 
   @IsString()
-  url: string;
+  @IsOptional()
+  url?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -21,8 +22,10 @@ export class DriverDto {
   familyName: string;
 
   @IsString()
-  dateOfBirth: string;
+  @IsOptional()
+  dateOfBirth?: string;
 
   @IsString()
-  nationality: string;
+  @IsOptional()
+  nationality?: string;
 }
