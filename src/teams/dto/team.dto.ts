@@ -6,6 +6,10 @@ export class TeamDto {
   name: string;
 
   @IsString()
+  @IsNotEmpty()
+  key: string;
+
+  @IsString()
   @IsOptional()
   url?: string;
 

@@ -5,9 +5,10 @@ const driverSeeder = async (prisma: PrismaClient) => {
   const drivers = await fetch('http://ergast.com/api/f1/2022/drivers.json')
     .then((response) => response.json())
     .then((data: any) =>
-      data.MRData.DriverTable.Drivers?.map((d) => {
-        delete d.driverId;
-        return d;
+      data.MRData.DriverTable.Drivers?.map((driver) => {
+        const newDriver = { ...driver, key: driver.driverId };
+        delete newDriver.driverId;
+        return newDriver;
       }),
     );
 

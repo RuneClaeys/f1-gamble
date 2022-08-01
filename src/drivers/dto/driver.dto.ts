@@ -7,6 +7,10 @@ export class DriverDto {
 
   @IsString()
   @IsNotEmpty()
+  key: string;
+
+  @IsString()
+  @IsNotEmpty()
   code: string;
 
   @IsString()

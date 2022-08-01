@@ -6,8 +6,9 @@ const teamSeeder = async (prisma: PrismaClient) => {
     .then((response) => response.json())
     .then((data: any) =>
       data.MRData.ConstructorTable.Constructors?.map((team) => {
-        delete team.constructorId;
-        return team;
+        const newTeam = { ...team, key: team.constructorId };
+        delete newTeam.constructorId;
+        return newTeam;
       }),
     );
 

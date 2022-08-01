@@ -11,44 +11,62 @@ datasource db {
 }
 
 model User {
-  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  email         String              @unique
-  hash          String
+  email String @unique
+  hash  String
 
   @@map("users")
 }
 
-model Driver{
-  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  permanentNumber   String
-  code              String        @unique
-  url               String?
-  givenName         String
-  familyName        String
-  dateOfBirth       String?
-  nationality       String?
+model Driver {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key             String         @unique
+  permanentNumber String
+  code            String         @unique
+  url             String?
+  givenName       String
+  familyName      String
+  dateOfBirth     String?
+  nationality     String?
+  seasonDriver    SeasonDriver[]
 
   @@map("drivers")
 }
 
-model Team{
-  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  url               String?
-  name              String        @unique
-  nationality       String?
-  shortName         String?       
+model Team {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key          String         @unique
+  url          String?
+  name         String         @unique
+  nationality  String?
+  shortName    String?
+  seasonDriver SeasonDriver[]
 
   @@map("teams")
 }
 
-model Season{
-  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  year              Int           @unique
-  seasonStartDate   DateTime
-  seasonEndDate     DateTime
+model Season {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  year            Int            @unique
+  seasonStartDate DateTime
+  seasonEndDate   DateTime
+  seasonDriver    SeasonDriver[]
 
   @@map("seasons")
+}
+
+model SeasonDriver {
+  team   Team   @relation(fields: [teamId], references: [id])
+  teamId String @db.Uuid
+
+  season   Season @relation(fields: [seasonId], references: [id])
+  seasonId String @db.Uuid
+
+  driver   Driver @relation(fields: [driverId], references: [id])
+  driverId String @db.Uuid
+
+  @@id([teamId, seasonId, driverId])
 }

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { driverSeeder } from './drivers.seeder';
+import { seasonDriverSeeder } from './season-drivers.seeder';
 import { seasonSeeder } from './season.seeder';
 import { teamSeeder } from './teams.seeder';
 
@@ -9,6 +10,7 @@ const seeders = [
   { name: 'Season', exec: seasonSeeder },
   { name: 'Teams', exec: teamSeeder },
   { name: 'Drivers', exec: driverSeeder },
+  { name: 'Season Drivers', exec: seasonDriverSeeder },
 ];
 
 async function run() {
