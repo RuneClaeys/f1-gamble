@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { SeasonDto } from './dto/season.dto';
 
@@ -11,13 +11,7 @@ export class SeasonsService {
   }
 
   async getSeason(id: string) {
-    const season = await this.prismaService.season.findFirst({
-      where: { id },
-    });
-
-    if (!season) throw new NotFoundException(`Season with Id: ${id} does not exist`);
-
-    return season;
+    return await this.prismaService.season.findFirstOrThrow({ where: { id } });
   }
 
   async createSeason(season: SeasonDto) {

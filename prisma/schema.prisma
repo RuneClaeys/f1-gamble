@@ -49,13 +49,36 @@ model Team {
 }
 
 model Season {
-  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  year            Int            @unique
+  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  year            Int               @unique
   seasonStartDate DateTime
   seasonEndDate   DateTime
   seasonDriver    SeasonDriver[]
+  SeasonGrandPrix SeasonGrandPrix[]
 
   @@map("seasons")
+}
+
+model GrandPrix {
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String            @unique
+  circuit             String
+  round               Int
+  raceTimestamp       DateTime?
+  qualifyingTimestamp DateTime?
+  SeasonGrandPrix     SeasonGrandPrix[]
+
+  @@map("grand-prix")
+}
+
+model SeasonGrandPrix {
+  season   Season @relation(fields: [seasonId], references: [id])
+  seasonId String @db.Uuid
+
+  grandPrix   GrandPrix @relation(fields: [grandPrixId], references: [id])
+  grandPrixId String    @db.Uuid
+
+  @@id([grandPrixId, seasonId])
 }
 
 model SeasonDriver {
