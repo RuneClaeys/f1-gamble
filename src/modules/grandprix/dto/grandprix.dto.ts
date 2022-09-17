@@ -10,6 +10,9 @@ export class grandPrixDto {
   round: number;
 
   @IsString()
+  name: string;
+
+  @IsString()
   @IsOptional()
   circuit: string;
 
