@@ -1,13 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
-const seasonDriverSeeder = async (prisma: PrismaClient) => {
-  const season = await prisma.season.findFirst({ where: { year: 2022 } });
+const seasonDriverSeeder = async (prisma: PrismaClient, year = 2022) => {
+  const season = await prisma.season.findFirst({ where: { year } });
   const teams = await prisma.team.findMany();
 
   const driverTeams = await Promise.all(
     teams.map(async (team) => {
-      const drivers = await fetch(`http://ergast.com/api/f1/2022/constructors/${team.key}/drivers.json`)
+      const drivers = await fetch(`http://ergast.com/api/f1/${year}/constructors/${team.key}/drivers.json`)
         .then((response) => response.json())
         .then((data: any) => data.MRData.DriverTable.Drivers)
         .then(async (drivers) => {

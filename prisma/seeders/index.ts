@@ -18,8 +18,7 @@ const seeders = [
 ];
 
 async function seed(seeder: { name: string; exec: (prisma: PrismaClient, year?: number) => Promise<any> }) {
-  const args = process.argv.slice(2);
-  const year = args[0] || 2022;
+  const year = new Date().getFullYear();
   console.log(`Seeding ${seeder.name}...`);
 
   await prisma.$connect();

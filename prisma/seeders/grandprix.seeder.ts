@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
-const grandPrixSeeder = async (prisma: PrismaClient) => {
-  const grandPrix = await fetch('http://ergast.com/api/f1/2022.json')
+const grandPrixSeeder = async (prisma: PrismaClient, year = 2022) => {
+  const grandPrix = await fetch(`http://ergast.com/api/f1/${year}.json`)
     .then((response) => response.json())
     .then((data: any) =>
       data.MRData.RaceTable.Races?.map((race) => {

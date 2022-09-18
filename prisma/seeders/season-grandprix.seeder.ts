@@ -1,8 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
-const seasonGrandPrixSeeder = async (prisma: PrismaClient) => {
-  const year = 2022;
+const seasonGrandPrixSeeder = async (prisma: PrismaClient, year = 2022) => {
   const season = await prisma.season.findFirst({ where: { year } });
 
   const yearGrandPrix = await fetch(`http://ergast.com/api/f1/${year}.json`)
